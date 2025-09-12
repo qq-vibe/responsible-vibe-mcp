@@ -82,22 +82,26 @@ npx responsible-vibe-mcp --system-prompt
 }
 ```
 
+#### Codex CLI Configuration
+
+1. **Get the system prompt** and configure it in Codex
+2. **Add the MCP server** to your `~/.codex/config.toml` file:
+
+```toml
+[mcp_servers.responsible-vibe-mcp]
+command = "npx"
+args = ["responsible-vibe-mcp"]
+```
+
 #### Custom Project Path
 
 Configure a different project directory using the `PROJECT_PATH` environment variable:
 
-```json
-{
-  "mcpServers": {
-    "responsible-vibe-mcp": {
-      "command": "npx",
-      "args": ["responsible-vibe-mcp"],
-      "env": {
-        "PROJECT_PATH": "/path/to/your/project"
-      }
-    }
-  }
-}
+```toml
+[mcp_servers.responsible-vibe-mcp]
+command = "npx"
+args = ["responsible-vibe-mcp"]
+env = { PROJECT_PATH = "/path/to/your/project" }
 ```
 
 ### For Developers and Testing

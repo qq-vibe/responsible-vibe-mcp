@@ -28,6 +28,9 @@ npx responsible-vibe-mcp --generate-config amazonq-cli
 # For Claude Code
 npx responsible-vibe-mcp --generate-config claude
 
+# For Codex CLI
+npx responsible-vibe-mcp --generate-config codex
+
 # For Gemini CLI
 npx responsible-vibe-mcp --generate-config gemini
 ```
@@ -98,7 +101,7 @@ AI Agent: "Let me understand your requirements:
 ## Requirements
 
 - **Node.js 18.0.0+**
-- **AI Coding Agent** (Amazon Q, Claude, Gemini, etc.)
+- **AI Coding Agent** (Amazon Q, Claude, Codex, Gemini, etc.)
 - **Git repository** (optional, for commit features)
 
 ## Manual Setup

@@ -8,7 +8,7 @@ This document explains how the Responsible Vibe MCP Server integrates with AI co
 
 ## Architecture Overview
 
-**Responsible Vibe MCP** is a Model Context Protocol (MCP) server that acts as an intelligent conversation coordinator for AI coding agents. It doesn't work standalone - it requires integration with an AI agent (like Claude, Amazon Q, or Gemini) that hosts the MCP server.
+**Responsible Vibe MCP** is a Model Context Protocol (MCP) server that acts as an intelligent conversation coordinator for AI coding agents. It doesn't work standalone - it requires integration with an AI agent (like Claude, Amazon Q, Codex, or Gemini) that hosts the MCP server.
 
 ```mermaid
 flowchart TD
@@ -28,7 +28,7 @@ flowchart TD
 
 ### Key Components
 
-1. **AI Coding Agent**: Your chosen AI assistant (Claude, Amazon Q, Gemini, etc.)
+1. **AI Coding Agent**: Your chosen AI assistant (Claude, Amazon Q, Codex, Gemini, etc.)
 2. **MCP Server**: The responsible-vibe-mcp server running as a subprocess
 3. **System Prompt**: Critical configuration that tells the AI how to use the MCP tools
 4. **Project Context**: Development plans, conversation state, and project artifacts
