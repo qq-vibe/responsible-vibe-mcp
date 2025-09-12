@@ -65,7 +65,7 @@ function parseCliArgs(): { shouldStartServer: boolean } {
     if (!agent) {
       console.error('❌ Error: --generate-config requires an agent parameter');
       console.error('Usage: --generate-config <agent>');
-      console.error('Supported agents: amazonq-cli, claude, gemini');
+      console.error('Supported agents: amazonq-cli, claude, codex, gemini');
       process.exit(1);
     }
     handleGenerateConfig(agent);
@@ -115,7 +115,7 @@ OPTIONS:
   --system-prompt               Show the system prompt for LLM integration
   --visualize, --viz            Start the interactive workflow visualizer
   --generate-config <agent>     Generate configuration files for AI coding agents
-                                Supported agents: amazonq-cli, claude, gemini
+                                Supported agents: amazonq-cli, claude, codex, gemini
 
 ENVIRONMENT VARIABLES:
   PROJECT_PATH    Set the project directory for custom workflow discovery
@@ -136,6 +136,7 @@ CONFIGURATION GENERATOR:
   
   Amazon Q CLI: --generate-config amazonq-cli  (generates .amazonq/cli-agents/vibe.json)
   Claude Code:  --generate-config claude       (generates CLAUDE.md, .mcp.json, settings.json)
+  Codex CLI:    --generate-config codex        (generates CODEX.md, .codex/config.toml, settings.json)
   Gemini CLI:   --generate-config gemini       (generates settings.json, GEMINI.md)
   
   Files are generated in the current directory with pre-configured settings
@@ -158,11 +159,16 @@ MCP CLIENT CONFIGURATION:
   {
     "mcpServers": {
       "responsible-vibe-mcp": {
-        "command": "npx", 
+        "command": "npx",
         "args": ["responsible-vibe-mcp"]
       }
     }
   }
+
+  Codex CLI (~/.codex/config.toml):
+  [mcp_servers.responsible-vibe-mcp]
+  command = "npx"
+  args = ["responsible-vibe-mcp"]
 
 SYSTEM PROMPT:
   Use --system-prompt to get the complete system prompt for your LLM.
