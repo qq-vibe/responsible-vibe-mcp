@@ -30,6 +30,14 @@ npx responsible-vibe-mcp --generate-config claude
 
 **Creates**: `CLAUDE.md`, `.mcp.json`, `settings.json`
 
+### Codex CLI
+
+```bash
+npx responsible-vibe-mcp --generate-config codex
+```
+
+**Creates**: `CODEX.md`, `.codex/config.toml`, `settings.json`
+
 ### Gemini CLI
 
 ```bash
@@ -78,6 +86,14 @@ Add the responsible-vibe-mcp server to your agent's MCP configuration:
     }
   }
 }
+```
+
+**For Codex CLI** (`~/.codex/config.toml`):
+
+```toml
+[mcp_servers.responsible-vibe-mcp]
+command = "npx"
+args = ["responsible-vibe-mcp"]
 ```
 
 ### Step 3: Configure Tool Permissions
@@ -160,6 +176,20 @@ npx responsible-vibe-mcp --generate-config claude
 2. Create `CLAUDE.md` with system prompt as rules
 3. Configure VS Code settings if needed
 
+### Codex CLI
+
+**Automated Setup**:
+
+```bash
+npx responsible-vibe-mcp --generate-config codex
+```
+
+**Manual Setup**:
+
+1. Create `~/.codex/config.toml` with server configuration
+2. Create `CODEX.md` with system prompt
+3. Configure any Codex-specific settings if needed
+
 ### Gemini CLI
 
 **Automated Setup**:
@@ -178,18 +208,11 @@ npx responsible-vibe-mcp --generate-config gemini
 
 To use a different project directory, set the `PROJECT_PATH` environment variable:
 
-```json
-{
-  "mcpServers": {
-    "responsible-vibe-mcp": {
-      "command": "npx",
-      "args": ["responsible-vibe-mcp"],
-      "env": {
-        "PROJECT_PATH": "/path/to/your/project"
-      }
-    }
-  }
-}
+```toml
+[mcp_servers.responsible-vibe-mcp]
+command = "npx"
+args = ["responsible-vibe-mcp"]
+env = { PROJECT_PATH = "/path/to/your/project" }
 ```
 
 ## Verification

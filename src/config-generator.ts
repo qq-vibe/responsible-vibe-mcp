@@ -2,9 +2,9 @@
  * Configuration Generator for Different AI Coding Agents
  *
  * This module implements a factory pattern to generate configuration files
- * for different AI coding agents (Amazon Q, Claude Code, Gemini CLI).
- * Each agent has its own generator class with single responsibility.
- */
+ * for different AI coding agents (Amazon Q, Claude Code, Codex CLI, Gemini CLI).
+  * Each agent has its own generator class with single responsibility.
+  */
 
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -171,6 +171,46 @@ class ClaudeConfigGenerator extends ConfigGenerator {
 }
 
 /**
+ * Codex Configuration Generator
+ * Generates CODEX.md, .mcp.json, settings.json
+ */
+class CodexConfigGenerator extends ConfigGenerator {
+  async generate(outputDir: string): Promise<void> {
+    const systemPrompt = this.getSystemPrompt();
+    // Generate CODEX.md (system prompt)
+    const codexMdPath = join(outputDir, 'CODEX.md');
+    await this.writeFile(codexMdPath, systemPrompt);
+
+    // Generate Codex config.toml (MCP server configuration)
+    const codexDir = join(outputDir, '.codex');
+    await mkdir(codexDir, { recursive: true });
+
+    const configToml = `[mcp_servers.responsible-vibe-mcp]\ncommand = "npx"\nargs = ["responsible-vibe-mcp"]\n`;
+    const codexConfigPath = join(codexDir, 'config.toml');
+    await this.writeFile(codexConfigPath, configToml);
+
+    // Generate settings.json (permissions and security)
+    const settings = {
+      permissions: {
+        allow: [
+          'MCP(responsible-vibe-mcp:whats_next)',
+          'MCP(responsible-vibe-mcp:conduct_review)',
+          'MCP(responsible-vibe-mcp:list_workflows)',
+          'MCP(responsible-vibe-mcp:get_tool_info)',
+          'Read(README.md)',
+          'Read(./.vibe/**)',
+          'Write(./.vibe/**)',
+        ],
+        ask: ['Bash(*)', 'Write(**)'],
+        deny: ['Read(./.env)', 'Read(./.env.*)', 'Read(./secrets/**)'],
+      },
+    };
+    const settingsPath = join(outputDir, 'settings.json');
+    await this.writeFile(settingsPath, JSON.stringify(settings, null, 2));
+  }
+}
+
+/**
  * Gemini CLI Configuration Generator
  * Generates settings.json and GEMINI.md
  */
@@ -232,11 +272,13 @@ class ConfigGeneratorFactory {
         return new AmazonQConfigGenerator();
       case 'claude':
         return new ClaudeConfigGenerator();
+      case 'codex':
+        return new CodexConfigGenerator();
       case 'gemini':
         return new GeminiConfigGenerator();
       default:
         throw new Error(
-          `Unsupported agent: ${agent}. Supported agents: amazonq-cli, claude, gemini`
+          `Unsupported agent: ${agent}. Supported agents: amazonq-cli, claude, codex, gemini`
         );
     }
   }
